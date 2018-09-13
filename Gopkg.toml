@@ -3,6 +3,8 @@ required = [
   "github.com/jteeuwen/go-bindata/go-bindata",
   "github.com/flynn/go-tuf/cmd/tuf",
   "github.com/flynn/go-tuf/cmd/tuf-client",
+	"golang.org/x/crypto/acme",
+	"golang.org/x/crypto/acme/autocert",
 ]
 
 [prune]

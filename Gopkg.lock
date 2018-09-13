@@ -1117,6 +1117,7 @@
     "github.com/tiborvass/uniline",
     "github.com/vanillahsu/go_reuseport",
     "github.com/vishvananda/netlink",
+    "golang.org/x/crypto/acme",
     "golang.org/x/crypto/acme/autocert",
     "golang.org/x/crypto/nacl/secretbox",
     "golang.org/x/crypto/ssh",
