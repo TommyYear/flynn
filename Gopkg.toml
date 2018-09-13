@@ -22,10 +22,6 @@ required = [
 
 [[constraint]]
   branch = "master"
-  name = "github.com/cupcake/jsonschema"
-
-[[constraint]]
-  branch = "master"
   name = "github.com/docker/docker"
   source = "github.com/flynn-archive/docker"
 

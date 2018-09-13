@@ -11,10 +11,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"sort"
-	"strings"
 	"time"
 
-	"github.com/cupcake/jsonschema"
 	"github.com/flynn/flynn/controller/client"
 	ct "github.com/flynn/flynn/controller/types"
 	"github.com/flynn/flynn/pkg/cluster"
@@ -24,38 +22,12 @@ import (
 )
 
 type ControllerSuite struct {
-	schemaCache map[string]*jsonschema.Schema
 	Helper
 }
 
 var _ = c.ConcurrentSuite(&ControllerSuite{})
 
 func (s *ControllerSuite) SetUpSuite(t *c.C) {
-	var schemaPaths []string
-	walkFn := func(path string, info os.FileInfo, err error) error {
-		if !info.IsDir() && filepath.Ext(path) == ".json" {
-			schemaPaths = append(schemaPaths, path)
-		}
-		return nil
-	}
-	schemaRoot, err := filepath.Abs(filepath.Join("..", "schema"))
-	t.Assert(err, c.IsNil)
-	t.Assert(filepath.Walk(schemaRoot, walkFn), c.IsNil)
-
-	s.schemaCache = make(map[string]*jsonschema.Schema, len(schemaPaths))
-	for _, path := range schemaPaths {
-		file, err := os.Open(path)
-		t.Assert(err, c.IsNil)
-		schema := &jsonschema.Schema{Cache: s.schemaCache}
-		err = schema.ParseWithoutRefs(file)
-		t.Assert(err, c.IsNil)
-		cacheKey := "https://flynn.io/schema" + strings.TrimSuffix(strings.TrimPrefix(path, schemaRoot), ".json")
-		s.schemaCache[cacheKey] = schema
-		file.Close()
-	}
-	for _, schema := range s.schemaCache {
-		schema.ResolveRefs(false)
-	}
 }
 
 type controllerExampleRequest struct {
